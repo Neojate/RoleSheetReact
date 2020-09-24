@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import Menu from './components/Menu';
 import Routes from './routes/Routes';
+import LanguageSwitch from './components/LanguageSwitch';
 
 
 function App() {

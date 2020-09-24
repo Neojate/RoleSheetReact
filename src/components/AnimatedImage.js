@@ -1,9 +1,11 @@
 import React from 'react';
 
 import homeImg from '../img/dragon.jpg';
+import characterImg from '../img/character.jpg';
 
 const images = {
-    home: homeImg
+    home: homeImg,
+    characters: characterImg
 }
 
 const AnimatedImage = ({src, text}) => (

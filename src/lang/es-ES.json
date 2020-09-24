@@ -1,0 +1,15 @@
+{
+    "menu.home": "Inicio",
+    "menu.notes": "Notas",
+    "menu.characters": "Mis personajes",
+    "menu.workshop": "Workshop",
+
+    "home.access": "Ingresar",
+    "home.subtitle": "El concepto",
+    "home.text": "RoleSheet es un portal web en el que podrás tener a mano todas las fichas de tus personajes con independencia del juego de rol o de mesa al que estés jugando. Con tan sólo registrarte podrás hacer uso de todas las fichas disponibles en el Workshop, oficiales o creadas por otros usuarios, o moldearte una ficha para que tu y el resto de la comunidad de Rolesheet puedan disfrutar. Sólo necesitas registrarte, de forma gratuita, a un sólo click de distancia. Pulsa en el siguiente botón:",
+    "home.title": "RoleSheet",
+    
+    "lang.spanish": "Español",
+    "lang.english": "Inglés"
+
+}

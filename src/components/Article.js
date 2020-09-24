@@ -1,12 +1,16 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-const Article = ({ title, subtitle, children }) => (
+const Article = ({ children, subtitle, text, title }) => (
     <div className="article">
         <div className="article-title">
-            <h1>{title}</h1>
-            {subtitle && <h4>{subtitle}</h4>}
+            <FormattedMessage id={title} tagName="h1" />
+            {subtitle && <FormattedMessage id={subtitle} tagName="h4" />}
         </div>
-        <p className="capital">{children}</p>
+        <p><FormattedMessage id={text} /></p>
+        <div>
+            {children}
+        </div>
     </div>
 );
 

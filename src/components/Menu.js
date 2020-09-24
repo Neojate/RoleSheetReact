@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { LoginButton } from '../auth/LoginButton';
@@ -6,10 +7,10 @@ import { LogoutDropDown } from '../auth/LogoutDropDown';
 
 class RenderLi extends Component {
     render() {
-        const { children, href } = this.props;
+        const { href, idLang } = this.props;
         return (
             <Link className="menu-link" to={href}>
-                {children}
+                <FormattedMessage id={idLang} />
             </Link>
         );
     }
@@ -22,10 +23,10 @@ export default class Menu extends Component {
         return (
             <nav className="menu">
                 <div className="container top-menu">
-                    <RenderLi href="/">Home</RenderLi>
-                    <RenderLi href="/sheets">Mis plantillas</RenderLi>
-                    <RenderLi href="/workshop">Workshop</RenderLi>
-                    <RenderLi href="/parches">Parches</RenderLi>
+                    <RenderLi href="/" idLang="menu.home" />
+                    <RenderLi href="/characters" idLang="menu.characters"/>
+                    <RenderLi href="/workshop" idLang="menu.workshop"/>
+                    <RenderLi href="/parches" idLang="menu.notes"/>
                     <LoginButton />
                     <LogoutDropDown />
                 </div>

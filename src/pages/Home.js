@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { LoginButton } from '../auth/LoginButton';
 import AnimatedImage from '../components/AnimatedImage';
 import Article from '../components/Article';
+import LanguageSwitch from '../components/LanguageSwitch';
 
 export default class Home extends Component {
 
@@ -8,19 +11,17 @@ export default class Home extends Component {
         return (
             <div className="home">
                 <AnimatedImage src="home" text="RoleSheet" />
-                <Article title="RoleSheet" subtitle="El concepto">
-                    RoleSheet es un portal web en el que podrás tener a mano todas las fichas de tus personajes con independencia
-                    del juego al que estés jugando. Podrás disfrutar de tener cientos de personajes, todos los que tu quieras,
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-                    blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla 
-
+                <Article
+                    subtitle="home.subtitle"
+                    text="home.text"
+                    title="home.title">
+                        <div className="text-center"><LoginButton/></div>
                 </Article>
+                <Article
+                    subtitle="workshop"
+                    text="workshop"
+                    title="work"/>
+                <LanguageSwitch />
             </div>
         );
     }
