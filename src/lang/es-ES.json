@@ -10,6 +10,12 @@
     "home.title": "RoleSheet",
     
     "lang.spanish": "Español",
-    "lang.english": "Inglés"
+    "lang.english": "Inglés",
+
+    "worksheet.closebutton": "Cerrar",
+    "worksheet.name": "Nombre",
+    "worksheet.placeholdername": "Inserta aquí tu nombre",
+    "worksheet.save": "Guardar tu Worksheet",
+    "worksheet.savebutton": "Guardar"
 
 }

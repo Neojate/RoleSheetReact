@@ -9,5 +9,11 @@
     "home.title": "RoleSheet",
 
     "lang.spanish": "Spanish",
-    "lang.english": "English"
+    "lang.english": "English",
+
+    "worksheet.closebutton": "Close",
+    "worksheet.name": "Name",
+    "worksheet.placeholdername": "Insert here your name",
+    "worksheet.save": "Save your Worksheet",
+    "worksheet.savebutton": "Save"
 }

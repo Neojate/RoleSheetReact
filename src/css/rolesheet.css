@@ -161,3 +161,110 @@ body {
     font-size: 72px;
     margin-top: 2px;
 }
+
+
+/**************************************************************************/
+/* CREADOR                                                                */
+/**************************************************************************/
+.canvas  {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 1123px;
+    position: relative;
+    width: 794px;
+}
+
+.canvas-input {
+    position: absolute;
+}
+
+.input-panel {
+    background-color: white;
+    border: 1px solid black;
+    max-width: 300px;
+}
+
+.input-panel i {
+    border-radius: 5px;
+    border: 1px solid black;
+    color: #444;
+    font-size: 40px;
+    min-width: 55px;
+    padding: 3px;
+    text-align: center;
+}
+
+.input-panel i:hover {
+    color: var(--primary-color);
+}
+
+.input-checked {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.historic-panel {
+    background-color: white;
+    border: 1px solid black;
+    height: 300px;
+    overflow-y: auto;
+    width: 300px;
+}
+
+.historic-div {
+    display: grid;
+    grid-template-columns: auto 30px 30px;
+    padding: 5px 15px;
+}
+
+.historic-visible:hover { color: green; }
+.historic-delete:hover { color: red; }
+
+.props-panel {
+    background-color: white;
+    border-radius: 5px;
+    max-width: 300px;
+    padding: 15px 5px;
+}
+
+.props-copypaste {
+    display: grid;
+    grid-template-columns: auto 30px 30px;
+    text-align: right;
+}
+
+.props-copypaste > div:hover {
+    color: var(--primary-color);
+}
+
+.form-props { 
+    border-top: 1px solid #888; 
+    margin-top: 5px;
+    padding-top: 5px;
+}
+
+.form-props > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5px;
+}
+
+.validated {
+    background-color: transparent;
+    border: none;
+}
+
+.checked {
+    background-color: red;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+.panels {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
