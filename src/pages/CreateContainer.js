@@ -1,6 +1,13 @@
-import React, { Component } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import React, { Component, useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PopUp from '../components/Popup';
+import Profile from '../components/Profile';
+
+const variable = () => {
+
+    return 'user';
+}
 
 export class CreateContainer extends Component {
 
@@ -101,7 +108,7 @@ export class CreateContainer extends Component {
 
     _handleDrop = (e) => {
         e.persist();
-        const { typeElement } = this.state;
+        const { typeElement, dropElement } = this.state;
         let element = null;
         let inputs = this.state.inputs;
 
@@ -109,8 +116,20 @@ export class CreateContainer extends Component {
             element = this._createInput(e, inputs.length);
         else if (typeElement === 'textarea')
             element = this._createTextArea(e, inputs.length);
-        else
+        else if (typeElement === 'checkbox')
             element = this._createCheckbox(e, inputs.length);
+        else {
+            let rect = document.getElementById('canvas').getBoundingClientRect();
+            inputs.map(inp => {
+                if (inp.id === dropElement.id) {
+                    inp.x = e.pageX - rect.left - dropElement.x;
+                    inp.y = e.pageY - rect.top - window.pageYOffset - dropElement.y;
+                }
+            });
+            this.setState({ inputs });
+            return;
+        }
+
 
         inputs.push(element);
         this.setState({ inputs });
@@ -126,18 +145,46 @@ export class CreateContainer extends Component {
         }
     };
 
+    _handleDragStart = (e) => {
+        let rect = e.target.getBoundingClientRect();
+        let dropElement = {
+            id: e.target.id,
+            x: ~~(e.pageX - rect.x),
+            y: ~~(e.pageY - rect.y - window.pageYOffset)
+        };
+        this.setState({ dropElement, typeElement: '' });
+    };
+
     _handleSaveClick = (e) => {
 
         const fields = ['worksheetGame', 'worksheetName'];
         if (!this._validateInputs(fields)) return;
 
+        const { sub } = this.props.user;
         const { canvasBg, id, inputs, worksheetGame, worksheetName } = this.state;
+
         fetch('http://rolesheetapi.test/api/saveWorkSheet', {
             method: 'POST',
-            body: JSON.stringify({ canvasBg, id, inputs, worksheetGame, worksheetName })
+            body: JSON.stringify({ sub, canvasBg, id, inputs, worksheetGame, worksheetName })
         })
             .then(response => response.json())
             .then(json => { document.getElementById('close-popup').click() });
+    };
+
+    _handlePublishClick = (e) => {
+
+        const fields = ['worksheetGame', 'worksheetName'];
+        if (!this._validateInputs(fields)) return;
+
+        const { sub } = this.props.user;
+        const { canvasBg, id, inputs, worksheetGame, worksheetName } = this.state;
+
+        fetch('http://rolesheetapi.test/api/saveworkshop', {
+            method: 'POST',
+            body: JSON.stringify({ sub, canvasBg, id, inputs, worksheetGame, worksheetName })
+        })
+            .then(response => response.json())
+            .then(json => { console.log(json) });
     };
 
     _validateInputs = (fields) => {
@@ -209,6 +256,33 @@ export class CreateContainer extends Component {
         );
     }
 
+    _renderPopPublish = () => (
+        <div className="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel"><FormattedMessage id='worksheet.save' /></h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        {this._renderInputPopUp('worksheetName', 'worksheet.placeholdername', 'worksheet.name', 'text')}
+                        {this._renderInputPopUp('worksheetGame', 'For example: D&D 5', 'Game', 'text')}
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-secondary" data-dismiss="modal" id="close-popup">
+                            <FormattedMessage id="worksheet.closebutton" />
+                        </button>
+                        <button className="btn btn-primary" onClick={this._handlePublishClick}>
+                            <FormattedMessage id="worksheet.savebutton" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     componentDidMount() {
         const url = new URL(document.location);
 
@@ -236,8 +310,10 @@ export class CreateContainer extends Component {
                 return <input
                     key={index}
                     className={`canvas-input ${newInput.validated ? 'validated' : ''}`}
+                    draggable
                     id={newInput.id}
                     onClick={this._handleInputClick}
+                    onDragStart={this._handleDragStart}
                     style={{
                         fontSize: newInput.fontSize,
                         left: newInput.x,
@@ -248,7 +324,9 @@ export class CreateContainer extends Component {
                 return <textarea
                     key={index}
                     className={`canvas-input ${newInput.validated ? 'validated' : ''}`}
+                    draggable
                     id={newInput.id}
+                    onDragStart={this._handleDragStart}
                     style={{
                         fontSize: newInput.fontSize,
                         left: newInput.x,
@@ -262,8 +340,10 @@ export class CreateContainer extends Component {
                 return <div
                     key={index}
                     className={`canvas-input input-checked ${newInput.validated ? 'validated' : ''} ${newInput.checked ? 'checked' : ''}`}
+                    draggable
                     id={newInput.id}
                     onClick={(e) => { newInput.checked = !newInput.checked }}
+                    onDragStart={this._handleDragStart}
                     style={{
                         backgroundColor: newInput.checked ? newInput.backgroundColor : 'transparent',
                         height: newInput.width,
@@ -317,7 +397,7 @@ export class CreateContainer extends Component {
                     <button data-toggle="modal" data-target="#exampleModal">
                         <FormattedMessage id='worksheet.savebutton' />
                     </button>
-                    <button>Publicar</button>
+                    <button data-toggle="modal" data-target="#publishModal">Publicar</button>
                 </div>
             </div>
         );
@@ -387,8 +467,10 @@ export class CreateContainer extends Component {
 
                     {/* POPUP */}
                     {this._renderPopUp()}
+                    {this._renderPopPublish()}
 
                 </div>
+                <Profile />
 
             </div >
         );

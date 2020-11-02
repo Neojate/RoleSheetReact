@@ -1,35 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class WorksheetList extends Component {
+const _renderWorksheets = (data) => (
+    data.map(row => (
+        <tr>
+            <td><Link to={`/createworksheet?id=${row.id}`}>{row.name}</Link></td>
+            <td>{row.game}</td>
+            <td>{row.updated_at}</td>
+        </tr>
+    ))
+);
 
-    _renderWorksheets() {
-        return this.props.worksheets.map(worksheet => (
-            <tr>
-                <td><Link to={`/createworksheet?id=${worksheet.id}`}>{worksheet.name}</Link></td>
-                <td>{worksheet.game}</td>
-                <td>{worksheet.updated_at}</td>
-            </tr>
-        ));
-    }
+const WorksheetList = ({ data, mySavedTemplates, workshops  }) => (
+    <div>
+        <h4>Plantillas</h4>
+        <button onClick={workshops}>Workshop</button>
+        <button onClick={mySavedTemplates}>Mis plantillas guardadas</button>
+        <table className='table'>
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Game</td>
+                    <td>Date</td>
+                </tr>
+            </thead>
+            <tbody>
+                {_renderWorksheets(data)}
+            </tbody>
+        </table>
+    </div>
+);
 
-    render() {
-        return (
-            <div>
-                <h4>Plantillas</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Game</td>
-                            <td>Date</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this._renderWorksheets()}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
-}
+export default WorksheetList;

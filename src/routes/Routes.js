@@ -8,20 +8,35 @@ import SheetCointainer from '../pages/SheetCointainer';
 import Notes from '../pages/Notes';
 import CharactersContainer from '../pages/CharactersContainer';
 import { CreateContainer } from '../pages/CreateContainer';
-import WorkshopContainer from '../pages/WorkshopContainer';
-
+import WorkshopContainer from '../containers/WorkshopContainer';
+import SavedSheetContainer from '../containers/SavedSheetContainer';
 
 export default class Routes extends Component {
 
     render () {
+        const { user } = this.props
         return (
             <Switch>
                 <Route exact path="/" component={Home} />
                 <PrivateRoute exact path="/characters" component={CharactersContainer} />
                 <Route exact path="/plantillas" component={WorkshopContainer} />
-                <Route exact path="/workshop" component={WorkshopContainer} />
-                <PrivateRoute exact path="/createworksheet" component={CreateContainer} />
-                <PrivateRoute exact path="/createworksheet/:id" component={CreateContainer} />
+                {/* <Route exact path="/workshop" component={WorkshopContainer} /> */}
+                <PrivateRoute
+                    component={() => <WorkshopContainer user={user} />}
+                    exact
+                    path="/workshop" />
+                <PrivateRoute
+                    component={() => <SavedSheetContainer user={user} />}
+                    exact
+                    path="/createworksheet" />
+                {/* <PrivateRoute 
+                    component={() => <CreateContainer user={user} />}
+                    exact
+                    path="/createworksheet" /> */}
+                <PrivateRoute 
+                    component={() => <CreateContainer user={user} />}
+                    exact 
+                    path="/createworksheet/:id" />
                 <Route component={PageNotFound} />
             </Switch>
         );
